@@ -21,20 +21,11 @@ jobs:
       - name: Run tests
         run: python -m pytest ./tests/modeltest.py
 
-
-  docker-build:
-    runs-on: ubuntu-latest
+  build:
     needs: test
-
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Build image
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          push: false
+      - name: Build Docker image
+        run: docker build -t kunal20/app:latest .
